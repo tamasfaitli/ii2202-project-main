@@ -5,7 +5,7 @@ from controller import PIDController
 from data import Data
 
 dt = 0.01
-length = 10
+length = 3
 
 # main
 if __name__ == "__main__":
@@ -22,11 +22,11 @@ if __name__ == "__main__":
 
 
     # init
-    vdp_system.set_initial_state(np.array([1.0,0.0,0.0]))
+    vdp_system.set_initial_state(np.array([2.5,0.0,0.0]))
     ref = np.zeros(vdp_system.get_dof())
     vdp_data.push_datapoint(ref, vdp_system.get_state(), 0.0)
 
-    T = vdp_data.get_time()
+    T = vdp_data.get_time_vector()
     for t in T[1:]:
         measured_state = vdp_system.observe_system()
         action = controller.calculate_action(measured_state, ref)
@@ -34,3 +34,6 @@ if __name__ == "__main__":
         vdp_system.step(action)
 
         vdp_data.push_datapoint(ref, vdp_system.get_state(), action)
+
+    vdp_data.plot_data()
+
