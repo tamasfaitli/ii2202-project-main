@@ -3,13 +3,15 @@ import time
 import matplotlib.pyplot as plt
 
 class Data:
-    def __init__(self, t_end, dt, dof_state, dof_control, aux_signals=None):
-        self.N = int((t_end/dt))+1
-        self.dof_state = dof_state
-        self.dof_control = dof_control
-        self.time = np.linspace(0, t_end, self.N)
-        self.reference = np.zeros((dof_state, self.N))
-        self.state = np.zeros((dof_state, self.N))
+    def __init__(self, params, dof_state, dof_control, aux_signals=None):
+        t_end               = params["length"]
+        dt                  = params["dt"]
+        self.N              = int((t_end/dt))+1
+        self.dof_state      = dof_state
+        self.dof_control    = dof_control
+        self.time           = np.linspace(0, t_end, self.N)
+        self.reference      = np.zeros((dof_state, self.N))
+        self.state          = np.zeros((dof_state, self.N))
         self.control_signal = np.zeros((dof_control, self.N))
 
         if aux_signals is not None:

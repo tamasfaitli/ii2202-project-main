@@ -6,7 +6,8 @@ import numpy as np
 # Zeitschrift für angewandte Mathematik und Physik ZAMP 38.6 (1987): 934-939.
 class VanDerPolOscillator2DOF(System):
     def __init__(self, params, dt=0.01):
-        super().__init__(2, dt)
+        # this system has 2 states and a scalar control signal
+        super().__init__(2, 1, dt)
         self.epsilon    = params['epsilon']
         self.omega      = params['omega']
 
@@ -21,7 +22,7 @@ class VanDerPolOscillator2DOF(System):
         assert len(state)  == 2, "State vector should contain 2 elements!"
         # assert len(action) == 1, "Action should be a scalar!"
 
-        dot_state = np.zeros(self.dof)
+        dot_state = np.zeros(self.n_state)
 
         dot_state[0] = state[1]
         dot_state[1] = self.epsilon*self.omega*(1-state[0]**2)*state[1]-self.omega**2*state[0]-action

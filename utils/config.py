@@ -5,6 +5,7 @@ from controller.MPCController import MPCController
 from controller.RFPTController import RFPTController
 
 import json
+import numpy as np
 
 def read_config(file):
     ''' Read config file.
@@ -30,7 +31,7 @@ def init_entities(config):
     system = None
     controller = None
 
-    dt = config["dt"]
+    dt = config["simulation"]["dt"]
 
     system_config = config["system"]
     controller_config = config["controller"]
@@ -55,4 +56,9 @@ def init_entities(config):
     assert system != None, "System configuration is not correct!"
     assert controller != None, "Controller configuration is not correct!"
 
-    return system, controller
+    init_state = np.array(system_config["init_state"])
+
+    #TODO implement different options for reference parametrized through json
+    reference = np.zeros(system.get_state_dim())
+
+    return system, controller, reference, init_state

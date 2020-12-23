@@ -6,7 +6,8 @@
     {
       "epsilon": 0.15,
       "omega": 1.0
-    }
+    },
+    "init_state": [2.5, 0.0]
   },
   "controller":
   {
@@ -19,6 +20,9 @@
     }
   },
 
-  "dt": 0.01
-
+  "simulation":
+  {
+    "dt": 0.01,
+    "length": 3.0
+  }
 }

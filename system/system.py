@@ -2,8 +2,9 @@ import numpy as np
 import abc
 
 class System(metaclass=abc.ABCMeta):
-    def __init__(self, dof, dt=0.01):
-        self.dof = dof
+    def __init__(self, dof, doc, dt=0.01):
+        self.n_state    = dof
+        self.n_control  = doc
         self.dt = dt
 
 
@@ -47,8 +48,9 @@ class System(metaclass=abc.ABCMeta):
     def get_model(self, linearized=False):
         raise NotImplementedError("Get model of system is not implemented!")
 
-    def get_dof(self):
-        return self.dof
+    def get_state_dim(self):
+        return self.n_state
 
-
+    def get_action_dim(self):
+        return self.n_control
 
