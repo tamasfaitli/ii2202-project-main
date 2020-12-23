@@ -1,0 +1,24 @@
+{
+  "system":
+  {
+    "name": "VDP",
+    "params":
+    {
+      "epsilon": 0.15,
+      "omega": 1.0
+    }
+  },
+  "controller":
+  {
+    "name": "PID",
+    "params":
+    {
+      "proportional": 10,
+      "integral": 1,
+      "derivative": 3
+    }
+  },
+
+  "dt": 0.01
+
+}
