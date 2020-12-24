@@ -33,7 +33,7 @@ class System(metaclass=abc.ABCMeta):
         # euler integration
         next_state   = state + self.dt * dot_state
 
-        return next_state
+        return next_state, dot_state
 
 
     #TODO implement option for disturbance

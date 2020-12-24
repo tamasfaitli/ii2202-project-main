@@ -11,6 +11,9 @@ class VanDerPolOscillator2DOF(System):
         self.epsilon    = params['epsilon']
         self.omega      = params['omega']
 
+        self.approx_epsilon = params['approx_epsilon']
+        self.approx_omega   = params['approx_omega']
+
 
     def _System__dynamics(self, state, action):
         ''' Execute the dynamical equations of the Van der Pol oscillator
@@ -29,6 +32,17 @@ class VanDerPolOscillator2DOF(System):
 
         return dot_state
 
+    def __inverse_dynamics(self, state, desired_effect):
+        '''
+
+        :param desired_effect:
+        :return:
+        '''
+
+        return self.approx_epsilon*self.approx_omega*(1-state[0]**2)*state[1]-self.approx_omega**2*state[0]-desired_effect
+
+
+
+
     def get_model(self, linearized=False):
-        #TODO implement
-        return None
+        return self.__inverse_dynamics
