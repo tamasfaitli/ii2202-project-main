@@ -69,7 +69,7 @@ def init_entities(config):
     if system_config["name"] == "VDP":
         system = VanDerPolOscillator2DOF(system_config["params"], dt)
     elif system_config["name"] == "IP":
-        system = InvertedPendulum4DOF(dt)
+        system = InvertedPendulum4DOF(system_config["params"], dt)
     else:
         print("System configuration is not correct!")
         exit(1)

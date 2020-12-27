@@ -1,0 +1,50 @@
+{
+  "system":
+  {
+    "name": "IP",
+    "params":
+    {
+        "g" : 9.81,
+        "m" : 0.2,
+        "M" : 0.5,
+        "I" : 0.006,
+        "l" : 0.3,
+        "bc" : 0.1,
+        "bp" : 0.012,
+        "approx_g" : 10,
+        "approx_m" : 0.23,
+        "approx_M" : 0.54,
+        "approx_I" : 0.005,
+        "approx_l" : 0.32,
+        "approx_bc" : 0.12,
+        "approx_bp" : 0.01
+    },
+    "init_state": [0.0, 0.0, 0.72, 0.0]
+  },
+  "controller":
+  {
+    "name": "RFPT",
+    "params":
+    {
+      "n_action": 1,
+      "l" : 6,
+      "D" : 0.45,
+      "A" : 0.4
+    }
+  },
+
+  "simulation":
+  {
+    "dt":     0.01,
+    "length": 3.0,
+    "dof": 1,
+    "reference":
+    {
+      "type": "constant",
+      "params":
+      {
+        "value": 0.0
+      }
+    }
+  }
+}

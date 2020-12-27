@@ -2,10 +2,14 @@ import numpy as np
 import abc
 
 class System(metaclass=abc.ABCMeta):
-    def __init__(self, dof, doc, dt=0.01):
+    def __init__(self, dof, doc, dos, dt=0.01):
         self.n_state    = dof
         self.n_control  = doc
+        self.store_dim  = dos
         self.dt = dt
+
+        self.state = np.zeros(self.n_state)
+        self.dot_state = np.zeros(self.n_state)
 
 
     @abc.abstractmethod
@@ -20,7 +24,7 @@ class System(metaclass=abc.ABCMeta):
 
 
     #TODO implement process noise option
-    def step(self, state, action):
+    def step(self, action):
         ''' Update the system state based on current state, control action, and the
         dynamics of the system.
 
@@ -29,20 +33,21 @@ class System(metaclass=abc.ABCMeta):
         :return:
         '''
         # calculating the rate of change of the system
-        dot_state = self.__dynamics(state, action)
+        self.dot_state = self.__dynamics(self.state, action)
         # euler integration
-        next_state   = state + self.dt * dot_state
-
-        return next_state, dot_state
+        self.state   = self.state + self.dt * self.dot_state
 
 
     #TODO implement option for disturbance
-    def observe_system(self, state):
+    def observe_system(self, acceleration=False):
         '''
 
         :return:
         '''
-        return state
+        if not acceleration:
+            return self.state
+        else:
+            return np.append(self.state, self.dot_state[-(self.store_dim-self.n_state):])
 
     @abc.abstractmethod
     def get_model(self, linearized=False):
@@ -53,4 +58,10 @@ class System(metaclass=abc.ABCMeta):
 
     def get_action_dim(self):
         return self.n_control
+
+    def get_store_dim(self):
+        return self.store_dim
+
+    def set_initial_state(self, state):
+        self.state = state
 

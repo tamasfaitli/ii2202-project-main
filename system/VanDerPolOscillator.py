@@ -7,7 +7,7 @@ import numpy as np
 class VanDerPolOscillator2DOF(System):
     def __init__(self, params, dt=0.01):
         # this system has 2 states and a scalar control signal
-        super().__init__(2, 1, dt)
+        super().__init__(2, 1, 3, dt)
         self.epsilon    = params['epsilon']
         self.omega      = params['omega']
 

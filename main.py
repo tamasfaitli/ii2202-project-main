@@ -13,26 +13,35 @@ else:
 
 def simulation(system, controller, reference, init_state, data):
     T = data.get_N_steps()
-    state = init_state
-    dot_state = np.zeros(len(state))
+    system.set_initial_state(init_state)
+
+    obs_state = 0.0
+    action = 0.0
 
     for t in range(T):
         ref_signal = reference[:,t]
-        # measure system state
-        obs_state = system.observe_system(state)
 
         # evaluate controller
         if controller.get_name() == "PID":
+            # measure system state
+            obs_state = system.observe_system()
             action = controller.calculate_action(obs_state, ref_signal)
+
         elif controller.get_name() == "RFPT":
-            action = controller.calculate_action(np.append(obs_state,dot_state[1]), ref_signal)
+            # measure system state
+            obs_state = system.observe_system(acceleration=True)
+            action = controller.calculate_action(obs_state, ref_signal)
+        elif controller.get_name() == "MPC":
+            # measure system state
+            obs_state = system.observe_system()
+            action = controller.calculate_action(obs_state, ref_signal)
         else:
             action = 0.0
 
         data.push_datapoint(ref_signal, obs_state, action)
 
         # feed control signal into the system
-        state, dot_state = system.step(state, action)
+        system.step(action)
 
     return data
 
@@ -45,7 +54,7 @@ if __name__ == "__main__":
     T, dt, system, controller, reference, init_state = conf.init_entities(config)
 
     # init data storage
-    data = Data(T, dt, system.get_state_dim(), system.get_action_dim())
+    data = Data(T, dt, system.get_store_dim(), system.get_action_dim())
 
     # execute simulation
     simulation_data = simulation(system, controller, reference, init_state, data)
