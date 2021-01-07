@@ -43,13 +43,13 @@ def plot_ddq(t, ddq_real, ddq_des, ddq_def):
     fig, axs = plt.subplots(2)
 
     axs[0].plot(t[:-1], ddq_real[0,:-1])
-    axs[0].plot(t[:-1], ddq_des[0,:-1])
-    axs[0].plot(t[:-1], ddq_def[0,:-1])
+    axs[0].plot(t[:-1], ddq_des[:-1])
+    axs[0].plot(t[:-1], ddq_def[:-1])
     axs[0].legend(["x_ddq_real", "x_ddq_des", "x_ddq_def"])
 
     axs[1].plot(t[:-1], ddq_real[0,:-1])
-    axs[1].plot(t[:-1], ddq_des[0,:-1])
-    axs[1].plot(t[:-1], ddq_def[0,:-1])
+    axs[1].plot(t[:-1], ddq_des[:-1])
+    axs[1].plot(t[:-1], ddq_def[:-1])
     axs[1].legend(["th_ddq_real", "th_ddq_des", "th_ddq_def"])
 
     plt.show()
