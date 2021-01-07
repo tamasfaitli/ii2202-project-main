@@ -8,20 +8,11 @@
     "bc": 0.1,
     "bp": 0.012
   },
-  "approx_system": {
-    "approx_g": 10,
-    "approx_m": 0.2,
-    "approx_M": 0.5,
-    "approx_I": 0.006,
-    "approx_l": 0.3,
-    "approx_bc": 0.1,
-    "approx_bp": 0.012
-  },
   "controller":
   {
-    "l" : 0.3,
-    "D" : 0.3,
-    "A" : 0.0001
+    "p" : 0.2,
+    "i" : 0.04,
+    "d" : 0.06
   },
   "simulation":
   {
